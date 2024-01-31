@@ -1,0 +1,16 @@
+version: "3.1"
+
+services:
+  api_gateway:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - services_network
+
+networks:
+  services_network:
+    name: gservices_default
+    external: true

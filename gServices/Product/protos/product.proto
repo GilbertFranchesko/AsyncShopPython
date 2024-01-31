@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package gshop.products;
+
+message ProductObject {
+    enum State {
+        IN_ROUTE = 0;
+        ACTIVE = 2;
+        DISABLE = 3;
+    }
+    uint64 id = 1;
+    string title = 2;
+    string description = 3;
+    float price = 4;
+    State state = 5;
+}
+
+message ProductListRequest {
+
+}
+
+message ProductListResponse {
+    repeated ProductObject products = 1;
+}
+
+message DeleteProductRequest {
+    uint64 product_id = 1;
+}
+
+message DeleteProductResponse {
+    bool success = 1; 
+}
+
+message ReadProductRequest {
+    uint64 product_id = 1;
+}
+
+message ReadProductResponse {
+    optional ProductObject product = 1;
+}
+
+message AddProductResponse {
+    optional ProductObject product = 1;
+}
+
+message EditProductRequest {
+    ProductObject product = 1;
+}
+
+message EditProductResponse {
+    ProductObject product = 1;
+}
+
+service Product {
+    rpc List(ProductListRequest) returns (ProductListResponse);
+    rpc Add(ProductObject) returns (AddProductResponse);
+    rpc Edit(EditProductRequest) returns (EditProductResponse);
+    rpc Delete(DeleteProductRequest) returns (DeleteProductResponse);
+    rpc Read(ReadProductRequest) returns (ReadProductResponse);
+}
+

@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package basket;
+
+import "product.proto";
+
+message Basket {
+    uint64 id = 1;
+    string user = 2;
+    repeated product.ProductObject products = 3; 
+    float price = 4;
+}
+
+message CreateBasketRequest {
+    string user = 1;
+    repeated product.ProductObject products = 2; 
+}
+
+message CreateBasketResponse {
+    Basket basket = 1;
+}
+
+message ListBasketRequest {
+
+}
+
+message ListBasketResponse {
+    repeated Basket baskets = 1;
+}
+
+message AddProductRequest {
+    string user = 1;
+    product.ProductObject product = 2;
+}
+
+message AddProductResponse {
+    Basket basket = 1;
+}
+
+service BasketService {
+    rpc Create(CreateBasketRequest) returns (CreateBasketResponse);
+    rpc List(ListBasketRequest) returns (ListBasketResponse);
+    rpc AddProduct(AddProductRequest) returns (AddProductResponse);
+}
+

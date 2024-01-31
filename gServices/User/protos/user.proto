@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package user;
+
+message User {
+    uint64 id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string email = 4;
+    string hash_password = 5;
+}
+
+message RegisterUserRequest {
+    string first_name = 1;
+    string last_name = 2;
+    string email = 3;
+    string password = 4;
+}
+
+message RegisterUserResponse {
+    User created_user = 1;
+}
+
+message UserListRequest {
+}
+
+message UserListResponse {
+    repeated User user_list = 1;
+}
+
+message UserAuthorizeRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message UserAuthorizeResponse {
+    enum AuthStatuses {
+        FAILED = 0;
+        SUCCESS = 1;
+        NON_ACTIVE = 2;
+    }
+
+    AuthStatuses status = 1;
+    User user_schema = 2;
+    // Token token  = 3;
+}
+
+message UserToken {
+    string access = 1;
+}
+
+
+
+service UserService {
+    rpc Register(RegisterUserRequest) returns (RegisterUserResponse);
+    rpc List(UserListRequest) returns (UserListResponse);
+    rpc Authorize(UserAuthorizeRequest) returns (UserAuthorizeResponse);
+}
+
